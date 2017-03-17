@@ -1,0 +1,87 @@
+<?php
+
+class NameAutoload
+{
+  protected $nameSpaces = array();
+
+  public function addNamespace($namespace, $rootDir)
+  {
+      if (is_dir($rootDir))
+      {
+        $this->nameSpaces[$namespace] = $rootDir;
+        return true;
+      }
+      else return false;
+  }
+
+
+
+  public function register()
+    {
+        spl_autoload_register(array($this, 'autoload'));
+    }
+
+  protected function autoload($class)
+  {
+    $pathes = explode('\\', $class);
+    if (is_array($pathes))
+    {
+      $namespace = array_shift($pathes);
+      if (!empty($this->nameSpaces[$namespace]))
+      {
+        $filepath = $this->nameSpaces[$namespace].'\\'.implode('/', $pathes).'.php';
+        require_once $filepath;
+        return true;
+      }
+    }
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+
+
+// index controller
+
+// display errors
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+// load classes
+define('ROOT', dirname(__FILE__));
+require_once(ROOT.'/components/autoload.php');
+
+$autoloader = new NameAutoload();
+$autoloader->addNamespace('components', ROOT.'/components');
+$autoloader->addNamespace('controller', ROOT.'/controller');
+$autoloader->register();
+
+// open session
+session_start();
+
+
+// call router
+$router = new components\Router();
+$router->run();

@@ -1,0 +1,10 @@
+.search {
+	text-align: right;
+}
+.log {
+	text-align: right;
+	position: absolute;
+	right: 100%;
+}
+
+

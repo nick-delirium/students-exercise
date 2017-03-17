@@ -1,0 +1,12 @@
+Options All -ExecCGI -Indexes -Includes +FollowSymLinks
+AddDefaultCharset utf-8
+
+RewriteEngine on
+Options All -Indexes
+RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+
+RewriteRule ^(.*)$ index.php/$1
