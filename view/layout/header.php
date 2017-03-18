@@ -5,12 +5,7 @@
 </head>
 <body>
 <?php if(isset($_SESSION['id'])): ?>
-<?php
-  $logged = new Students();
-  $id = $_SESSION['id'];
-  $name = $logged->getName($id);
-?>
-	<span>Вошли как <?=$name;?>, <a href='/exit' class="log">Выйти?</a></span>
+	<span>Вошли как <?=$student['first_name'].' '.$student['last_name'];?>, <a href='/exit' class="log">Выйти?</a></span>
 <?php else: ?>
 	<a href='/login' class="log">Войти в свой профиль</a>
 <?php endif;?>

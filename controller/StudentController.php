@@ -6,11 +6,11 @@ class StudentController
 	{
 	 	$id = $_SESSION['id'];
 
-		$student = new Students();
+		$student = new Student();
 		$student = $student->getOne($id);
 
 		$group = $student['groupNum'];
-		$costudents = new Students();
+		$costudents = new Student();
 		$costudents = $costudents->findCostudents($group);
 
 		if (isset($_POST['submit']))
@@ -19,7 +19,7 @@ class StudentController
 			$lname = $_POST['lname'];
 			$fname = $_POST['fname'];
 			$group = $_POST['group'];
-			Students::UpdateStudent($fname, $lname, $group, $id);
+			Student::UpdateStudent($fname, $lname, $group, $id);
 			header("Location: /profile/");
 		}
 		require_once(ROOT.'/view/profile.php');

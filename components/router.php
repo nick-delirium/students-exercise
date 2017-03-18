@@ -13,20 +13,19 @@ class Router
     private function getURI()
     {
         if (!empty($_SERVER['REQUEST_URI']))
-		{
+		      {
             return trim($_SERVER['REQUEST_URI'], '/');
-        }
+          }
     }
 
     public function run()
     {
-        $uri = self::getURI();
+        $uri = $this->getURI();
 
         foreach ($this->routes as $uriPattern => $path) {
 
             if (preg_match("~^$uriPattern$~", $uri))
 			{
-
                 $internalRoute = preg_replace("~^$uriPattern$~", $path, $uri);
 
                 $parts = explode('/', $internalRoute);
@@ -40,7 +39,6 @@ class Router
                 $controller = new $controllerName;
                 $result = call_user_func_array(array($controller, $actionName), $parts);
                 if ($result !=null) break;
-
             }
         }
     }

@@ -23,6 +23,8 @@ Search: <form action="#" method="post" style='width: 300px;'>
 		</tr>
 		<?php endforeach;?>
 	</table>
-<a href='/profile/'>Войти в свой профиль.</a>
+<?php if (isset($_SESSION['id'])): ?>
+	<a href='/profile/'>Войти в свой профиль.</a>
+<?php endif;?>
 </div>
 </body>

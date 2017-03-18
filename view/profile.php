@@ -14,7 +14,9 @@
 Список одногруппников:
 <ul>
 <?php foreach($costudents as $costudent):?>
-<li><?= $costudent['first_name'].' '.$costudent['last_name'];?>, <?= $costudent['points'];?> баллов</li>
+<?php if($costudent['id'] != $student['id']): ?>
+  <li><?= $costudent['first_name'].' '.$costudent['last_name'];?>, <?= $costudent['points'];?> баллов</li>
+<?php endif;?>
 <?php endforeach;?>
 </ul>
 

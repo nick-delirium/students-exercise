@@ -4,7 +4,7 @@ class MainController
 {
 	public function actionIndex()
 	{
-		$Students = new Students();
+		$Students = new Student();
 
 	 	if (isset($_POST['submit']) && $_POST['search'] != '')
 		{
@@ -14,6 +14,13 @@ class MainController
 		}
 	 	else $students = $Students->getAll();
 	//  print_r($students);
+
+		if(isset($_SESSION['id']))
+		{
+			$id = $_SESSION['id'];
+			$student = new Student();
+			$student = $student->getOne($id);
+		}
 
 		require_once(ROOT.'/view/index.php');
 	}
@@ -27,12 +34,11 @@ class MainController
 			$name = $_POST['name'];
 			$group = $_POST['group'];
 
-
-			$studentId = Students::checkStudent($name, $group);
+			$studentId = Student::checkStudent($name, $group);
 			if ($studentId == false) $errors[] = "такого студента в группе $group не найдено.";
 			else
 			{
-				$students = new Students();
+				$students = new Student();
 				$students->login($studentId, $name, $group);
 				header("Location: /profile/");
 			}
