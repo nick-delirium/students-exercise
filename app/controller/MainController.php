@@ -1,10 +1,12 @@
 <?php
 
+namespace controllers;
+
 class MainController
 {
 	public function actionIndex()
 	{
-		$Students = new Student();
+		$Students = new \model\Student();
 
 	 	if (isset($_POST['submit']) && $_POST['search'] != '')
 		{
@@ -18,8 +20,8 @@ class MainController
 		if(isset($_SESSION['id']))
 		{
 			$id = $_SESSION['id'];
-			$student = new Student();
-			$student = $student->getOne($id);
+			$LoggedStudent = new \model\Student();
+			$LoggedStudent = $student->getOne($id);
 		}
 
 		require_once(ROOT.'/view/index.php');
@@ -33,13 +35,13 @@ class MainController
 		{
 			$name = $_POST['name'];
 			$group = $_POST['group'];
-
-			$studentId = Student::checkStudent($name, $group);
+			$student = new \model\Student();
+			$studentId = $student->checkStudent($name, $group);
 			if ($studentId == false) $errors[] = "такого студента в группе $group не найдено.";
 			else
 			{
-				$students = new Student();
-				$students->login($studentId, $name, $group);
+				$student->login($studentId, $name, $group);
+				$LoggedStudent = $student->getOne($studentId);
 				header("Location: /profile/");
 			}
 		}

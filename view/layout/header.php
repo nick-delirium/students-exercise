@@ -5,7 +5,7 @@
 </head>
 <body>
 <?php if(isset($_SESSION['id'])): ?>
-	<span>Вошли как <?=$student['first_name'].' '.$student['last_name'];?>, <a href='/exit' class="log">Выйти?</a></span>
+	<span>Вошли как <?=$LoggedStudent['first_name'].' '.$LoggedStudent['last_name'];?>, <a href='/exit' class="log">Выйти?</a></span>
 <?php else: ?>
 	<a href='/login' class="log">Войти в свой профиль</a>
 <?php endif;?>
