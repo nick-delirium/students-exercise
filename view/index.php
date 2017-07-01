@@ -3,7 +3,7 @@
 <div>
 	Students List	<br>
 Search: <form action="#" method="post" style='width: 300px;'>
-	<input type='text' name='search' value='' placeholder="Имя, фамилия или группа" style='width: 200px;'><br>
+	<input type='text' name='search' value='<?php if (isset($options['text'])) echo $options['text'];?>' placeholder="Имя, фамилия или группа" style='width: 200px;'><br>
 	<input type='submit' name='submit' value="search">
 	</form>
 </div>
@@ -23,7 +23,7 @@ Search: <form action="#" method="post" style='width: 300px;'>
 		</tr>
 		<?php endforeach;?>
 	</table>
-<?php if (isset($_SESSION['id'])): ?>
+<?php if (!isset($_SESSION['id'])): ?>
 	<a href='/profile/'>Войти в свой профиль.</a>
 <?php endif;?>
 </div>

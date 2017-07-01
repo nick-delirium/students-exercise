@@ -1,6 +1,6 @@
 <?php
 
-namespace components;
+
 
 class Router
 {
@@ -8,7 +8,7 @@ class Router
 
     public function __construct()
     {
-        $routesPath=ROOT.'/configuration/routes.php';
+        $routesPath=ROOT.'/app/configuration/routes.php';
         $this->routes = include($routesPath);
     }
 
@@ -23,7 +23,7 @@ class Router
     public function run()
     {
         $uri = $this->getURI();
-
+       // echo($_SERVER['REQUEST_URI']);
         foreach ($this->routes as $uriPattern => $path) {
 
             if (preg_match("~^$uriPattern$~", $uri))

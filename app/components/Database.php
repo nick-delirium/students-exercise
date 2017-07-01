@@ -1,7 +1,5 @@
 <?php
 
-namespace components;
-use \PDO;
 
 class Database
 {
@@ -19,7 +17,7 @@ class Database
 
         $dsn = "mysql:host={$conf['host']};dbname={$conf['dbName']}";
         $db = new \PDO($dsn, $conf['user'], $conf['pass'], [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
-
+        
     return $db;
     }
 }

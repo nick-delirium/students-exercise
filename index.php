@@ -8,16 +8,16 @@ error_reporting(E_ALL);
 
 // load classes
 define('ROOT', dirname(__FILE__));
-require_once(ROOT.'/vendor/moonframe/core/autoload.php');
-$loader = new NameAutoloader();
-$loader->register();
+
+
+include(ROOT.'/vendor/autoload.php');
+//include(ROOT.'/vendor/composer/autoload_psr4.php');
 
 // open session
 session_start();
 
-// call Database
-include_once(ROOT.'/app/components/Database.php');
+
 
 // call router
-$router = new moonframe\Router();
+$router = new Router();
 $router->run();

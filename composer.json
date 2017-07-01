@@ -1,0 +1,16 @@
+{
+    "name": "app/stud",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sylenien",
+            "email": "sylenien@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "autoload" : {
+        "classmap": [
+            "app/components", "app/configuration", "app/controller", "app/model"]
+    }
+}

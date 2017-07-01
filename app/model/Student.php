@@ -1,15 +1,14 @@
 <?php
 
-namespace model;
 
 class Student
 {
 	public function getAll()
 	{
-		$db = \components\Database::Connect();
+		$db = Database::Connect();
 		$students = [];
 		$sql = "SELECT * FROM students";
-
+		$db->query("SET NAMES 'UTF8'");
 		$result = $db->query($sql);
 		$result->setFetchMode(\PDO::FETCH_ASSOC);
 
@@ -26,8 +25,8 @@ class Student
 
 	public function search($options)
 	{
-		$db = \components\Database::Connect();
-
+		$db = Database::Connect();
+		$db->query("SET NAMES 'UTF8'");
 		$sql = 'SELECT * FROM students WHERE (first_name like :text OR last_name like :text) OR groupNum like :text';
 
 		$result = $db->prepare($sql);
@@ -52,9 +51,9 @@ class Student
 	public function getOne($id)
 	{
 		$id = intval($id);
-		$db = \components\Database::Connect();
+		$db = Database::Connect();
 		$sql = 'SELECT * FROM students WHERE id = :id';
-
+		$db->query("SET NAMES 'UTF8'");
 		$result = $db->prepare($sql);
 		$result->bindParam(':id', $id, \PDO::PARAM_INT);
 		$result->execute();
@@ -64,9 +63,9 @@ class Student
 
 	public static function updateStudent($fname, $lname, $group, $id)
 	{
-		$db = \components\Database::Connect();
+		$db = Database::Connect();
 		$sql = 'UPDATE students SET first_name=:first_name,last_name=:last_name,groupNum=:groupNum WHERE id = :id';
-
+		$db->query("SET NAMES 'UTF8'");
 		$result = $db->prepare($sql);
 		$result->bindParam(':first_name', $fname, \PDO::PARAM_STR);
 		$result->bindParam(':last_name', $lname, \PDO::PARAM_STR);
@@ -77,22 +76,24 @@ class Student
 
 	public function checkStudent($name, $group)
 	{
-		$db = \components\Database::Connect();
+		$db = Database::Connect();
 		$sql = 'SELECT id FROM students WHERE last_name like :name AND groupNum like :groupNum';
-
+		$db->query("SET NAMES 'UTF8'");
 		$result = $db->prepare($sql);
 		$result->bindParam(':name', $name, \PDO::PARAM_STR);
 		$result->bindParam(':groupNum', $group, \PDO::PARAM_INT);
 		$result->execute();
-		return $result->fetch();
+		$result->setFetchMode(\PDO::FETCH_ASSOC);
+		$id = $result->fetch();
+		return $id;
 	}
 
 	public function findCostudents($group)
 	{
 		$costudents = [];
-		$db = \components\Database::Connect();
+		$db = Database::Connect();
 		$sql = 'SELECT * FROM students WHERE groupNum = :groupNum';
-
+		$db->query("SET NAMES 'UTF8'");
 		$result = $db->prepare($sql);
 		$result->bindParam(':groupNum', $group, \PDO::PARAM_INT);
 		$result->execute();
@@ -109,12 +110,24 @@ class Student
 
 	public function login($studentId, $name, $group)
 	{
+		
 		$id = intval($studentId);
-		if (!isset($_SESSION['id']))
-		{
+		
 			$_SESSION['id'] = $id;
 			$_SESSION['name'] = $name;
 			$_SESSION['groupnum'] = $group;
-		}
+		
+	}
+
+	public function exit()
+	{
+		$_SESSION = array();
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+            $params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]);
+        }
+        session_destroy();
 	}
 }

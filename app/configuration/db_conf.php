@@ -3,6 +3,6 @@
 return array(
     'host' => 'localhost',
     'user' => 'root',
-    'pass' => '',
+    'pass' => 'root',
     'dbName' => 'students',
 );

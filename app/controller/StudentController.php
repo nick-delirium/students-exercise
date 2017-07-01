@@ -1,18 +1,17 @@
 <?php
 
-namespace controllers;
 
 class StudentController
 {
 	public function actionProfile()
 	{
 	 	$id = $_SESSION['id'];
-
-		$Student = new \model\Student();
+	 	echo $id;
+		$Student = new Student();
 		$student = $Student->getOne($id);
 
 		$group = $student['groupNum'];
-		$costudents = new \model\Student();
+		$costudents = new Student();
 		$costudents = $costudents->findCostudents($group);
 
 		if (isset($_POST['submit']))
@@ -24,7 +23,7 @@ class StudentController
 			\model\Student::UpdateStudent($fname, $lname, $group, $id);
 			header("Location: /profile/");
 		}
-		$online = new \model\Student();
+		$online = new Student();
 		$LoggedStudent = $online->getOne($_SESSION['id']);
 		require_once(ROOT.'/view/profile.php');
 	}
